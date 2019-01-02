@@ -42,7 +42,7 @@ def createTextElement(parent, name, value):
     parent.appendChild(xelement)
     return xelement
 
-def invalidate(c): 
+def invalidate(c):
     """ replace invalid characters """
     return u'<abbr title="U+%s">\ufffd</abbr>' % \
         ('000' + hex(ord(c.group(0)))[2:])[-4:]
@@ -81,7 +81,7 @@ def id(xentry, entry):
             md5(entry.summary).hexdigest())
     elif entry.has_key("content") and entry.content:
 
-        entry_id = (entry.content[0].base + "/" + 
+        entry_id = (entry.content[0].base + "/" +
             md5(entry.content[0].value).hexdigest())
     else:
         return
@@ -94,7 +94,7 @@ def links(xentry, entry):
     if not entry.has_key('links'):
        entry['links'] = []
        if entry.has_key('link'):
-         entry['links'].append({'rel':'alternate', 'href':entry.link}) 
+         entry['links'].append({'rel':'alternate', 'href':entry.link})
     xdoc = xentry.ownerDocument
     for link in entry['links']:
         if not 'href' in link.keys(): continue
@@ -110,12 +110,12 @@ def links(xentry, entry):
             xlink.setAttribute('length', link.get('length'))
         xentry.appendChild(xlink)
 
-def add_link(xentry, href, rel, title, mimeType = 'text/html'):
+def add_link(xentry, href, rel, title, mime_type = 'text/html'):
     """ add a link to the links """
     xdoc = xentry.ownerDocument
     xlink = xdoc.createElement('link')
     xlink.setAttribute('href', href)
-    xlink.setAttribute('type', mimeType)
+    xlink.setAttribute('type', mime_type)
     xlink.setAttribute('rel', rel)
     xlink.setAttribute('title', title)
     xentry.appendChild(xlink)
@@ -151,7 +151,7 @@ def author(xentry, name, detail):
 
     createTextElement(xauthor, 'email', detail.get('email', None))
     createTextElement(xauthor, 'uri', detail.get('href', None))
-        
+
     xentry.appendChild(xauthor)
 
 def content(xentry, name, detail, bozo):
@@ -244,7 +244,7 @@ def source(xsource, source, bozo, format):
 
     if not source.has_key('links') and source.has_key('href'): #rss
         source['links'] = [{ 'href': source.get('href') }]
-        if source.has_key('title'): 
+        if source.has_key('title'):
             source['links'][0]['title'] = source.get('title')
     links(xsource, source)
 
